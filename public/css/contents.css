@@ -434,7 +434,7 @@ box-shadow: 3px 3px 10px 0px rgba(242,71,71,0.6);}
 /* Teacher :: 생성된 시험이 없을 때 */
 .no_test_guide {width:100%; margin:30px 0 60px 0; padding-top:240px; background:url(../img/no_test_img.jpg) no-repeat 50% 0px; color:#232e3c; font-weight:200; text-align: center; font-size:25px;}
 .no_test_guide span {display:block; font-weight:600;}
-.no_test_guide button {margin-top:30px; background:#6277f5 url(../img/no_test_arrow.gif) no-repeat 125px 50%; border-radius:8px; padding:10px 70px 10px 20px; color:#fff; font-weight:600; font-size:12px; -webkit-box-shadow: 3px 3px 10px 0px rgba(98,119,245,0.6); -moz-box-shadow: 3px 3px 10px 0px rgba(98,119,245,0.6); box-shadow: 3px 3px 10px 0px rgba(98,119,245,0.6);}
+.no_test_guide a {display:inline-block; margin-top:30px; background:#6277f5 url(../img/no_test_arrow.gif) no-repeat 125px 50%; border-radius:8px; padding:10px 70px 10px 20px; color:#fff; font-weight:600; font-size:12px; -webkit-box-shadow: 3px 3px 10px 0px rgba(98,119,245,0.6); -moz-box-shadow: 3px 3px 10px 0px rgba(98,119,245,0.6); box-shadow: 3px 3px 10px 0px rgba(98,119,245,0.6);}
 
 /* Student :: 시험 시 주의사항 */
 #test_warning_container {width: 100%; background:#f4f7fa;}

@@ -14,7 +14,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <Header />
+        {/* <Header /> */}
         <Switch>
           <Route exact path="/" component={FormLogin} />
           <Route exact path="/signup" component={FormSignUpFir} />
@@ -31,7 +31,7 @@ function App() {
           <Route path="/createtestform/:classCode" component={CreateTestForm} />
           <Redirect from="*" to="/" />
         </Switch>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </BrowserRouter>
   );

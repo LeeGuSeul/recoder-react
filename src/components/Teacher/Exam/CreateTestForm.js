@@ -1,23 +1,23 @@
-
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 import Footer from "../../Layout/Footer";
-import BoardEditor from "../Editor/BoardEditor"
+import BoardEditor from "../Editor/BoardEditor";
 import CreateProblem from "Components/Modal/CreateProblem";
 import DatePicker from "react-date-picker";
 import "react-date-picker/dist/DatePicker.css";
-import { useHistory, useParams } from 'react-router';
-import axios from 'axios';
+import { useHistory, useParams } from "react-router";
+import axios from "axios";
+import Header from "../../Layout/Header";
 
 const CreateTestForm = () => {
   const [selectDate, setSelectDate] = useState(new Date());
   const [boardFormHtml, setBoardFormHtml] = useState(null);
   const history = useHistory();
-  const [quizList, setQuizList] = useState([])
+  const [quizList, setQuizList] = useState([]);
   const ParamsClassCode = useParams();
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [])
+  }, []);
 
   // 시험지 정보
   let TestFormInfo = {
@@ -33,7 +33,7 @@ const CreateTestForm = () => {
     test_lang: "",
   };
 
-  const CreateTestFormSubmit = e => {
+  const CreateTestFormSubmit = (e) => {
     e.preventDefault();
     TestFormInfo.class_code = ParamsClassCode.classCode;
     TestFormInfo.test_name = e.target.text_name.value;
@@ -49,7 +49,7 @@ const CreateTestForm = () => {
       " " +
       e.target.test_end_time.value +
       ":" +
-      e.target.test_end_min.value+
+      e.target.test_end_min.value +
       ":00";
     TestFormInfo.test_wait = "00:" + e.target.test_wait.value + ":00";
     TestFormInfo.test_caution = boardFormHtml;
@@ -68,20 +68,53 @@ const CreateTestForm = () => {
 
     console.log(AllTestInfoArr);
 
-
-    axios.post("/examcreate", AllTestInfoArr)
+    axios
+      .post("/examcreate", AllTestInfoArr)
       .then((res) => {
         console.log(res.data);
         !alert(`[${TestFormInfo.test_name}] 시험 생성이 완료되었습니다.`) &&
           history.push(`/teacher/${ParamsClassCode.classCode}`);
-        
       })
       .catch((err) => {
         console.log(err);
       });
+  };
+    const deleteQuiz = (v) => {
+      setQuizList(quizList.filter(
+        (el) => el.question_name !== v
+      ));
+    };
+
+
+  const readQuizList = () => { 
+    return quizList.length !== 0 ? (
+      quizList.map((v) => (
+        <div className="questions_box">
+          <p className="tit">{v.question_name}</p>
+          <p className="score">
+            <span>{v.question_score}</span>점
+          </p>
+          <div className="btn_wrap">
+            <div className="btn questions_modify">수정하기</div>
+            <div
+              className="btn questions_delete"
+              onClick={() => deleteQuiz(v.question_name)}
+            >
+              삭제하기
+            </div>
+          </div>
+        </div>
+      ))
+    ) : (
+      <div className="questions_box">생성된 문제가 없습니다.</div>
+    );
   }
 
-    return (
+  
+
+  return (
+    <>
+      <Header />
       <div id="wrapper">
         <div className="create_class_container">
           <div className="form_contents">
@@ -292,22 +325,28 @@ const CreateTestForm = () => {
                   />
                 </div>
                 <div className="add_questions_list">
-                  {quizList.length !== 0 ? (
-                    quizList.map((v) => (
-                      <div className="questions_box">
-                        <p className="tit">{v.question_name}</p>
-                        <p className="score">
-                          <span>{v.question_score}</span>점
-                        </p>
-                        <div className="btn_wrap">
-                          <div className="btn questions_modify">수정하기</div>
-                          <div className="btn questions_delete">삭제하기</div>
+                  {/* {quizList.length !== 0 ? (
+                  quizList.map((v) => (
+                    <div className="questions_box">
+                      <p className="tit">{v.question_name}</p>
+                      <p className="score">
+                        <span>{v.question_score}</span>점
+                      </p>
+                      <div className="btn_wrap">
+                        <div className="btn questions_modify">수정하기</div>
+                        <div
+                          className="btn questions_delete"
+                          onClick={() => deleteQuiz(v.question_name)}
+                        >
+                          삭제하기
                         </div>
                       </div>
-                    ))
-                  ) : (
-                    <div className="questions_box">생성된 문제가 없습니다.</div>
-                  )}
+                    </div>
+                  ))
+                ) : (
+                  <div className="questions_box">생성된 문제가 없습니다.</div>
+                )} */}
+                  {readQuizList()}
                 </div>
               </div>
               <div className="test_save_btn">
@@ -317,7 +356,9 @@ const CreateTestForm = () => {
           </div>
         </div>
       </div>
-    );
-}
+      <Footer />
+    </>
+  );
+};
 
 export default CreateTestForm;
